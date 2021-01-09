@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="GBK"?>
+<!-- 指定Struts 2配置文件的DTD信息 -->
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 配置了系列常量 -->
+	<constant name="struts.i18n.encoding" value="GBK"/>
+	<constant name="struts.enable.DynamicMethodInvocation" value="false" />
+	<constant name="struts.devMode" value="true"/>
+	
+	<package name="lee" extends="struts-default">
+
+		<!-- 用户拦截器定义在该元素下 -->
+		<interceptors>
+			<!-- 定义了一个名为authority的拦截器 -->
+			<interceptor name="authority" 
+				class="org.crazyit.app.interceptor.AuthorityInterceptor"/>
+		</interceptors>
+
+		<!-- 定义全局Result -->
+		<global-results>
+			<!-- 当返回login视图名时，转入loginForm.jsp页面 -->
+			<result name="login">/WEB-INF/content/loginForm.jsp</result>
+		</global-results>
+		
+		<action name="addGoods" class="org.crazyit.goodssys.action.GoodsAction"
+			method="add">
+			<!-- 添加货物成功，列出所有货物 -->
+			<result type="chain">listGoods</result>
+			<!-- 添加货物失败，跳转到添加货物的表单页 -->
+			<result name="error">/WEB-INF/content/goodsForm.jsp</result>
+		</action>
+		
+		<!-- 修改 -->
+		<action name="updateGoods" class="org.crazyit.goodssys.action.GoodsAction"
+			method="update">
+			<!-- 修改货物成功，列出所有货物 -->
+			<result type="chain">listGoods</result>
+			<!--修改货物失败， -->
+			<result name="error">/WEB-INF/content/index.jsp</result>
+		</action>		
+		
+		<action name="listGoods" class="org.crazyit.goodssys.action.GoodsAction"
+			method="list">
+			<result>/WEB-INF/content/index.jsp</result>
+		</action>
+		
+		<action name="deleteGoods" class="org.crazyit.goodssys.action.GoodsAction"
+			method="delete">
+			<result type="chain">listGoods</result>
+		</action>
+		
+		<action name="search" class="org.crazyit.goodssys.action.GoodsAction"
+			method="search">
+			<result type="chain">searchResult</result>
+		</action>
+		
+		<action name="searchResult" class="org.crazyit.goodssys.action.GoodsAction">
+			<result>/WEB-INF/content/index.jsp</result>
+			<interceptor-ref name="defaultStack"/>
+			<!-- 应用自定义拦截器 -->
+			<interceptor-ref name="authority"/>			
+		</action>
+		
+		<action name="page" class="org.crazyit.page.action.pageAction"
+			method="setPage1">
+			<result type="chain">listGoods</result>
+		</action>
+				
+		<action name="login" class="org.crazyit.app.action.LoginAction">
+			<!-- 定义三个结果映射 -->			
+			<result name="error">/WEB-INF/content/error.jsp</result>
+			<result type="chain">listGoods</result>			
+		</action>
+		
+		<action name="index" class="org.crazyit.goodssys.action.GoodsAction"
+			method="list">
+			<result>/WEB-INF/content/index.jsp</result>
+			<interceptor-ref name="defaultStack"/>
+			<!-- 应用自定义拦截器 -->
+			<interceptor-ref name="authority"/>			
+		</action>
+		
+		<action name="goodsForm">
+					<result>/WEB-INF/content/goodsForm.jsp</result>
+			<interceptor-ref name="defaultStack"/>
+			<!-- 应用自定义拦截器 -->
+			<interceptor-ref name="authority"/>
+		</action>
+				
+		<!-- 让用户直接访问该应用时列出所有视图页面 -->
+		<action name="*">
+			<result>/WEB-INF/content/{1}.jsp</result>
+		</action>
+	</package>
+</struts>
