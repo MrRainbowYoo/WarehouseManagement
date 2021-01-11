@@ -199,7 +199,7 @@
 				<div class="flex1">
 					<div class="item">货物类别</div>
 					<div class="">
-						<select class="shop_type_select_v" id="goods_type" name="goods.goods_type">
+						<select class="shop_type_select_v" id="goods_type" name="goods.goods_type" style="text-align-last: center;font-weight:bold">
 							<option disabled selected>---请选择---</option>
 								<option value="饮料">饮料</option>
 								<option value="玩具">玩具</option>
@@ -234,7 +234,7 @@
 				<div class="flex1">
 					<div class="item">折扣</div>
 					<div class="">
-						<select class="shop_type_select_v" id="discount" name="goods.discount">
+						<select class="shop_type_select_v" id="discount" name="goods.discount" style="text-align-last: center;font-weight:bold">
 							<option disabled selected>选择折扣</option>
 							<option value="0">不打折</option>
 							<option value="10">一折</option>
